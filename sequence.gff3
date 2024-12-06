@@ -1,0 +1,19 @@
+##gff-version 3
+#!gff-spec-version 1.21
+#!processor NCBI annotwriter
+##sequence-region NC_000883.2 1 5596
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=10798
+NC_000883.2	RefSeq	region	1	5596	.	+	.	ID=NC_000883.2:1..5596;Dbxref=taxon:10798;gbkey=Src;genome=genomic;isolate=J35;mol_type=genomic DNA
+NC_000883.2	RefSeq	gene	616	2631	.	+	.	ID=gene-B19V_gp1;Dbxref=GeneID:1489597;Name=NS;gbkey=Gene;gene=NS;gene_biotype=protein_coding;locus_tag=B19V_gp1
+NC_000883.2	RefSeq	CDS	616	2631	.	+	0	ID=cds-YP_004928144.1;Parent=gene-B19V_gp1;Dbxref=GenBank:YP_004928144.1,GeneID:1489597;Name=YP_004928144.1;gbkey=CDS;gene=NS;locus_tag=B19V_gp1;product=non-structural protein NS1;protein_id=YP_004928144.1
+NC_000883.2	RefSeq	gene	2084	2308	.	+	.	ID=gene-B19V_gp5;Dbxref=GeneID:11293634;Name=B19V_gp5;gbkey=Gene;gene_biotype=protein_coding;locus_tag=B19V_gp5
+NC_000883.2	RefSeq	CDS	2084	2308	.	+	0	ID=cds-YP_004928145.1;Parent=gene-B19V_gp5;Dbxref=GenBank:YP_004928145.1,GeneID:11293634;Name=YP_004928145.1;gbkey=CDS;locus_tag=B19V_gp5;product=7.5 kDa protein;protein_id=YP_004928145.1
+NC_000883.2	RefSeq	gene	2624	4969	.	+	.	ID=gene-B19V_gp2;Dbxref=GeneID:1489598;Name=VP1;gbkey=Gene;gene=VP1;gene_biotype=protein_coding;locus_tag=B19V_gp2
+NC_000883.2	RefSeq	CDS	2624	4969	.	+	0	ID=cds-YP_004928146.1;Parent=gene-B19V_gp2;Dbxref=GenBank:YP_004928146.1,GeneID:1489598;Name=YP_004928146.1;gbkey=CDS;gene=VP1;locus_tag=B19V_gp2;product=capsid protein 1;protein_id=YP_004928146.1
+NC_000883.2	RefSeq	gene	2874	3119	.	+	.	ID=gene-B19V_gp6;Dbxref=GeneID:11293635;Name=B19V_gp6;gbkey=Gene;gene_biotype=protein_coding;locus_tag=B19V_gp6
+NC_000883.2	RefSeq	CDS	2874	3119	.	+	0	ID=cds-YP_004928147.1;Parent=gene-B19V_gp6;Dbxref=GenBank:YP_004928147.1,GeneID:11293635;Name=YP_004928147.1;gbkey=CDS;locus_tag=B19V_gp6;product=protein X;protein_id=YP_004928147.1
+NC_000883.2	RefSeq	gene	3305	4969	.	+	.	ID=gene-B19V_gp3;Dbxref=GeneID:11293627;Name=VP2;gbkey=Gene;gene=VP2;gene_biotype=protein_coding;locus_tag=B19V_gp3
+NC_000883.2	RefSeq	CDS	3305	4969	.	+	0	ID=cds-YP_004928148.1;Parent=gene-B19V_gp3;Dbxref=GenBank:YP_004928148.1,GeneID:11293627;Name=YP_004928148.1;gbkey=CDS;gene=VP2;locus_tag=B19V_gp3;product=capsid protein 2;protein_id=YP_004928148.1
+NC_000883.2	RefSeq	CDS	4890	5174	.	+	0	ID=cds-YP_004928149.1;Dbxref=GenBank:YP_004928149.1;Name=YP_004928149.1;gbkey=CDS;product=11 kDa protein;protein_id=YP_004928149.1
+NC_000883.2	RefSeq	gene	4890	5174	.	+	.	ID=gene-B19V_gp4;Dbxref=GeneID:11293636;Name=B19V_gp4;gbkey=Gene;gene_biotype=other;locus_tag=B19V_gp4
+
