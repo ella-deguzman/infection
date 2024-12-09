@@ -354,3 +354,108 @@ jbrowse text-index --out $APACHE_ROOT/jbrowse2
 ---------------------
 
 Open `http://yourhost/jbrowse2/` again in your web browser. There should now be several options in the main menu. Follow the guide in the "Launch the JBrowse 2 application and search for a gene in the linear genome view" section of https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.1120 to navigate to the gene search and try browsing a few genes.
+
+
+Multiple Sequence Alignment:
+============================
+
+1\. Add plugin to config.json file
+==================================
+
+Open config.json in AWS instance:
+```
+nano /var/www/html/jbrowse2/config.json
+```
+
+Add the MSA plugin by pasting the following JSON into the plugins section of the file:
+```
+"plugins": [
+
+    {
+
+      "name": "MsaView",
+
+    "url": "https://unpkg.com/jbrowse-plugin-msaview/dist/jbrowse-plugin-msaview.umd.production.min.js"
+
+    }
+
+  ]
+```
+
+2\. Download and Process Reference Genome
+=========================================
+
+2.1 Set Up the Environment
+---------------------------
+
+Open a local terminal and navigate to the directory where you want to download genome files:
+```
+cd ~/Desktop/genomedata
+```
+
+Install required system dependencies:
+
+```
+brew install wget httpd samtools htslib
+sudo brew services start httpd
+```
+
+2.2 Download and Prepare Genomes
+---------------------------------
+
+#### Human Parvovirus (HPV):
+```
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090/GCF_000839645.1_ViralProj14090_genomic.fna.gz
+gunzip GCF_000839645.1_ViralProj14090_genomic.fna.gz
+mv GCF_000839645.1_ViralProj14090_genomic.fna hpv.fa
+samtools faidx hpv.fa
+```
+
+#### Canine Parvovirus (CPV):
+```
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/848/925/GCF_000848925.1_ViralProj14614/GCF_000848925.1_ViralProj14614_genomic.fna.gz
+gunzip GCF_000848925.1_ViralProj14614_genomic.fna.gz
+mv GCF_000848925.1_ViralProj14614_genomic.fna cpv.fa
+samtools faidx cpv.fa
+```
+
+#### Rat Parvovirus(RPV):
+```
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1/GCA_031139815.1_ASM3113981v1_genomic.fna.gz
+gunzip GCA_031139815.1_ASM3113981v1_genomic.fna.gz
+mv GCA_031139815.1_ASM3113981v1_genomic.fna rpv.fa
+samtools faidx rpv.fa
+```
+
+#### Porcine Parvovirus (PPV):
+```
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055/GCF_000839485.1_ViralProj14055_genomic.fna.gz
+gunzip GCF_000839485.1_ViralProj14055_genomic.fna.gz
+mv GCF_000839485.1_ViralProj14055_genomic.fna ppv.fa
+samtools faidx ppv.fa
+```
+
+3\. Combine Sequences for Multiple Sequence Alignment
+======================================================
+```
+cat hpv.fa cpv.fa rpv.fa ppv.fa> combined_sequences.fa
+```
+4\. Perform Multiple Sequence Alignment (MSA)
+=============================================
+
+Install and run MAFFT 
+```
+brew install mafft 
+mafft --auto combined_sequences.fa > aligned_sequences.mfa
+```
+
+5\. Visualize the Alignment in JBrowse:
+========================================
+
+Go to `http://yourhost/jbrowse2/`, replacing yourhost with IP address.
+
+Select an assembly then click Add > Multiple Sequence Alignment View. 
+
+Click MSA file and then upload the aligned_sequences.mfa file.
+
+Now visualize the Multiple Sequence Alignment between human, canine, rat, and porcine parvovirus!
