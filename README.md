@@ -1,5 +1,3 @@
-# infection
-
 1\. Platform Specific Setup 
 ============================
 
@@ -155,3 +153,204 @@ sudo chown -R $(whoami) $APACHE_ROOT/jbrowse2
 ------------------------------
 
 In your browser, now type in `http://yourhost/jbrowse2/`, where yourhost is either localhost or the IP address from earlier. Now you should see the words "It worked!" with a green box underneath saying "JBrowse 2 is installed." with some additional details.'
+
+
+4\. Load and process test data
+==============================
+
+4.1. Download and process reference genome
+------------------------------------------
+
+Make sure you are in the temporary folder you created, then download the human, canine, rat, and porcine parvovirus genome in fasta format.
+
+Human: 
+```
+export FASTA_ROOT=[https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090/)
+
+wget $FASTA_ROOT/[GCF_000839645.1_ViralProj14090_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090/GCF_000839645.1_ViralProj14090_genomic.fna.gz)
+```
+Canine :
+```
+export FASTA_ROOT=[https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/848/925/GCF_000848925.1_ViralProj14614](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/848/925/GCF_000848925.1_ViralProj14614/)
+
+wget $FASTA_ROOT/GCF_000848925.1_ViralProj14614_genomic.fna.gz
+```
+Rat:
+```
+export FASTA_ROOT=[https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1/)
+
+wget $FASTA_ROOT/[GCA_031139815.1_ASM3113981v1_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1/GCA_031139815.1_ASM3113981v1_genomic.fna.gz)
+```
+Porcine
+```
+export FASTA_ROOT=<https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055>
+
+wget $FASTA_ROOT/[GCF_000839485.1_ViralProj14055_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055/GCF_000839485.1_ViralProj14055_genomic.fna.gz)
+```
+
+4.2 Unzip reference genome
+--------------------------
+
+Unzip the gzipped reference genome, rename it, and index it. This will allow jbrowse to rapidly access any part of the reference just by coordinate.
+
+Human:
+```
+gunzip [GCF_000839645.1_ViralProj14090_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090/GCF_000839645.1_ViralProj14090_genomic.fna.gz) 
+
+mv [GCF_000839645.1_ViralProj14090_genomic.fna](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090/GCF_000839645.1_ViralProj14090_genomic.fna.gz) hpv.fa
+
+samtools faidx hpv.fa
+```
+
+Canine :
+```
+gunzip GCF_000848925.1_ViralProj14614_genomic.fna.gz   
+
+mv GCF_000848925.1_ViralProj14614_genomic.fna cpv.fa
+
+samtools faidx cpv.fa
+```
+Rat:
+```
+gunzip [GCA_031139815.1_ASM3113981v1_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1/GCA_031139815.1_ASM3113981v1_genomic.fna.gz)
+
+mv [GCA_031139815.1_ASM3113981v1_genomic.fna](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1/GCA_031139815.1_ASM3113981v1_genomic.fna.gz) rpv.fa
+
+samtools faidx rpv.fa
+```
+Porcine:
+```
+gunzip [GCF_000839485.1_ViralProj14055_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055/GCF_000839485.1_ViralProj14055_genomic.fna.gz)
+
+mv [GCF_000839485.1_ViralProj14055_genomic.fna](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055/GCF_000839485.1_ViralProj14055_genomic.fna.gz) pcv.fa
+
+samtools faidx pcv.fa
+```
+4.3. Load genome into jbrowse
+-----------------------------
+Human: 
+```
+jbrowse add-assembly hpv.fa --out $APACHE_ROOT/jbrowse2 --load copy
+```
+
+Canine:
+```
+jbrowse add-assembly cpv.fa --out $APACHE_ROOT/jbrowse2 --load copy
+```
+
+Rat:
+```
+jbrowse add-assembly rpv.fa --out $APACHE_ROOT/jbrowse2 --load copy
+```
+
+Porcine:
+```
+jbrowse add-assembly ppv.fa --out $APACHE_ROOT/jbrowse2 --load copy
+```
+
+4.4. Download and process genome annotations
+--------------------------------------------
+
+Human:
+```
+export GFF_ROOT=[https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090/)
+
+wget $GFF_ROOT/[GCF_000839645.1_ViralProj14090_genomic.gff.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/645/GCF_000839645.1_ViralProj14090/GCF_000839645.1_ViralProj14090_genomic.gff.gz)
+
+gunzip GCF_000839645.1_ViralProj14090_genomic.gff.gz
+```
+
+Canine
+```
+export GFF_ROOT=[https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/848/925/GCF_000848925.1_ViralProj14614](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/848/925/GCF_000848925.1_ViralProj14614/)
+
+wget $GFF_ROOT/[GCF_000848925.1_ViralProj14614_genomic.gff.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/848/925/GCF_000848925.1_ViralProj14614/GCF_000848925.1_ViralProj14614_genomic.gff.gz)
+
+gunzip [GCF_000848925.1_ViralProj14614_genomic.gff.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/848/925/GCF_000848925.1_ViralProj14614/GCF_000848925.1_ViralProj14614_genomic.gff.gz)
+```
+
+Rat
+```
+export GFF_ROOT=[https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/031/139/815/GCA_031139815.1_ASM3113981v1/)
+
+[wget $GFF_ROOT/GCA_031139815.1_ASM3113981v1_genomic.gff.gz](http://.gff.gz)
+
+gunzip [GCA_031139815.1_ASM3113981v1_genomic.gff.gz](http://.gff.gz)
+```
+
+Porcine:
+```
+export FASTA_ROOT=<https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055>
+
+wget $FASTA_ROOT/[GCF_000839485.1_ViralProj14055_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055/GCF_000839485.1_ViralProj14055_genomic.fna.gz)
+
+gunzip [GCF_000839485.1_ViralProj14055_genomic.fna.gz](https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/839/485/GCF_000839485.1_ViralProj14055/GCF_000839485.1_ViralProj14055_genomic.fna.gz)
+```
+
+Use jbrowse to sort the annotations. jbrowse sort-gff sorts the GFF3 by refName (first column) and start position (fourth column), while making sure to preserve the header lines at the top of the file (which start with "#"). We then compress the GFF with bgzip (block gzip, which zips files into little blocks for rapid access), and index with tabix. The tabix command outputs a file named genes.gff.gz.tbi in the same directory, and we then refer to "genes.gff.gz" as a "tabix indexed GFF3 file".
+
+Human: 
+```
+jbrowse sort-gff GCF_000839645.1_ViralProj14090_genomic.gff > hpvgenes.gff
+bgzip hpvgenes.gff
+tabix hpvgenes.gff.gz
+```
+
+Canine:
+```
+jbrowse sort-gff GCF_000848925.1_ViralProj14614_genomic.gff > cpvgenes.gff
+bgzip cpvgenes.gff
+tabix cpvgenes.gff.gz
+```
+
+Rat:
+```
+jbrowse sort-gff GCA_031139815.1_ASM3113981v1_genomic.gff >  rpvgenes.gff
+bgzip rpvgenes.gff
+tabix rpvgenes.gff.gz
+```
+
+Porcine:
+```
+jbrowse sort-gff GCF_000839485.1_ViralProj14055_genomic.gff > ppv
+bgzip ppvgenes.gff
+tabix ppvgenes.gff.gz
+```
+
+4.5. Load annotation track into jbrowse
+----------------------------------------
+Human:
+```
+jbrowse add-track hpvgenes.gff.gz --out $APACHE_ROOT/jbrowse2 --load copy --assemblyNames hpv
+```
+
+Canine
+```
+jbrowse add-track cpvgenes.gff.gz --out $APACHE_ROOT/jbrowse2 --load copy --assemblyNames cpv
+```
+
+Rat
+```
+jbrowse add-track rpvgenes.gff.gz --out $APACHE_ROOT/jbrowse2 --load copy --assemblyNames rpv
+```
+
+Porcine
+```
+jbrowse add-track ppvgenes.gff.gz --out $APACHE_ROOT/jbrowse2 --load copy --assemblyNames ppv
+```
+
+4.6. Index for search-by-gene
+-----------------------------
+
+Run the "jbrowse text-index" command to allow users to search by gene name within JBrowse 2.
+```
+jbrowse text-index --out $APACHE_ROOT/jbrowse2
+```
+
+5\. Use your genome browser to explore a gene of interest
+============================================================
+
+5.1. Launch JBrowse2
+---------------------
+
+Open `http://yourhost/jbrowse2/` again in your web browser. There should now be several options in the main menu. Follow the guide in the "Launch the JBrowse 2 application and search for a gene in the linear genome view" section of https://currentprotocols.onlinelibrary.wiley.com/doi/10.1002/cpz1.1120 to navigate to the gene search and try browsing a few genes.
