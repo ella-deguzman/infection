@@ -456,6 +456,6 @@ Go to `http://yourhost/jbrowse2/`, replacing yourhost with IP address.
 
 Select an assembly then click Add > Multiple Sequence Alignment View. 
 
-Click MSA file and then upload the `aligned_sequences.mfa` file.
+Click MSA file and then upload the `aligned_sequences.mfa` file. Or paste our link: `https://raw.githubusercontent.com/ella-deguzman/infection/refs/heads/main/aligned_sequences.mfa`
 
 Now visualize the Multiple Sequence Alignment between human, canine, rat, and porcine parvovirus!
