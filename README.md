@@ -498,3 +498,73 @@ nano /var/www/html/jbrowse2/config.json
 
 }
 ```
+3\.  Launch JBrowse and View Ideogram
+========================================
+Go to `http://yourhost/jbrowse2/`, replacing yourhost with IP address.
+
+Now visualize the Ideogram between human, canine, rat, and porcine parvovirus!
+
+
+
+Synteny Track 
+=============
+
+1\.  Prepare Files 
+==================
+
+Generate or download a PAF file (Pairwise mApping Format) containing the alignments between the two genomes. Here is an example we did using `minimap2`
+
+```
+minimap2 -x asm5 hpv.fa cpv.fa > hpv_cpv.paf
+```
+
+2\.  Load these Assemblies into JBrowse
+========================================
+```
+jbrowse add-assembly hpv.fa --out /var/www/html/jbrowse2 --load copy --name HPV
+jbrowse add-assembly cpv.fa --out /var/www/html/jbrowse2 --load copy --name CPV
+```
+
+3\.  Add the Synteny Track:
+============================
+
+Use the CLI to add the PAF file as a synteny track:
+
+```
+jbrowse add-track hpv_cpv.paf --type SyntenyTrack \ --assemblyNames HPV,CPV --load copy --out /var/www/html/jbrowse2
+```
+
+4\.  Update config.json
+========================
+```
+{
+
+  "type": "SyntenyTrack",
+
+  "trackId": "synteny_track",
+
+  "assemblyNames": ["HPV", "CPV"],
+
+  "name": "HPV vs CPV Synteny",
+
+  "adapter": {
+
+    "type": "PAFAdapter",
+
+    "pafLocation": {
+
+      "uri": "./hpv_cpv.paf"
+
+    }
+
+  }
+
+}
+```
+
+5\.  Launch JBrowse and View Synteny
+========================================
+Go to `http://yourhost/jbrowse2/`, replacing yourhost with IP address.
+
+Now visualize the Synteny between human, canine, rat, and porcine parvovirus!
+
