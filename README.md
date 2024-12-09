@@ -459,3 +459,38 @@ Select an assembly then click Add > Multiple Sequence Alignment View. 
 Click MSA file and then upload the `aligned_sequences.mfa` file. Or paste our link: `https://raw.githubusercontent.com/ella-deguzman/infection/refs/heads/main/aligned_sequences.mfa`
 
 Now visualize the Multiple Sequence Alignment between human, canine, rat, and porcine parvovirus!
+
+
+Ideogram View
+=============
+
+1\. Install temporarily on JBrowse:
+========================================
+
+Click on tools in the menu bar (should be in the top left of the screen).
+
+Click on plugin store. 
+
+On the right side of the screen, scroll down to where it shows the Ideogram Plug in. Press install.
+
+
+2\. Install permanently on AWS instance:
+========================================
+
+2.1  Go to your AWS instance. Open config.json in AWS instance: 
+---------------------------------------------------------------
+```
+nano /var/www/html/jbrowse2/config.json
+```
+
+2.2 Scroll down to plug-ins and add the new plug in permanently.
+-----------------------------------------------------------------
+```
+{
+
+      "name": "Ideogram",
+
+      "url": "https://unpkg.com/jbrowse-plugin-ideogram/dist/jbrowse-plugin-ideogram.umd.production.min.js"
+
+}
+```
